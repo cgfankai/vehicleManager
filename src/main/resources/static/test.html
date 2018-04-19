@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <script type="application/javascript" src="js/jquery-3.3.1.js"></script>
+    <script type="application/javascript" src="js/test.js"></script>
+    <style>
+        div {
+            border-color: aqua;
+            border-width: 1px;
+            border-style: dashed;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <input type="text" id="interface-1-1" value="2018-04-16">
+    <input type="text" id="interface-1-2" value="0">
+    <input type="button" value="派车单列表读取" id="interface-1">
+</div>
+<div>
+    <input type="text" id="interface-2-1" value="00049152">
+    <input type="button" value="派车单任务读取" id="interface-2">
+</div>
+<div>
+    <input type="button" value="获得一个新的派车编码" id="interface-3">
+</div>
+<div>
+    <input type="button" value="获得车型列表" id="interface-4">
+</div>
+<div>
+    <input type="text" id="interface-5-1" value="奥迪">
+    <input type="text" id="interface-5-2" value="0">
+    <input type="button" value="获得车号" id="interface-5">
+</div>
+<div>
+    <label for="interface-6-1">用车单位、报到地点、用车人</label>
+    <input type="text" id="interface-6-1" value="用车单位">
+    <input type="button" value="根据用车单位、报到地点、用车人获取信息" id="interface-6">
+</div>
+
+<div>
+    <label for="interface-7-1">派车单编码</label>
+    <input type="text" id="interface-7-1" value="00050000">
+    <label for="interface-7-2">派车日期</label>
+    <input type="text" id="interface-7-2" value="2018-04-18 09:13:25">
+    <label for="interface-7-3">车号</label>
+    <input type="text" id="interface-7-3" value="鄂AS55U7">
+    <label for="interface-7-4">车型</label>
+    <input type="text" id="interface-7-4" value="奥迪">
+    <label for="interface-7-5">司机工号</label>
+    <input type="text" id="interface-7-5" value="002288">
+    <label for="interface-7-6">司机姓名</label>
+    <input type="text" id="interface-7-6" value="王开贵">
+    <label for="interface-7-7">报到时间</label>
+    <input type="text" id="interface-7-7" value="2018-04-18 10:13:25">
+    <label for="interface-7-15">说明</label>
+    <input type="text" id="interface-7-15">
+    <label for="interface-7-18">派车人工号</label>
+    <input type="text" id="interface-7-18" value="001469">
+    <label for="interface-7-19">派车人姓名</label>
+    <input type="text" id="interface-7-19" value="李志德">
+    <input type="button" value="新增派车单" id="interface-7">
+</div>
+
+<div>
+    <label for="interface-8-1">派车单编码</label>
+    <input type="text" id="interface-8-1" value="00050000">
+    <label for="interface-8-2">用车单位</label>
+    <input type="text" id="interface-8-2" value="院办">
+    <label for="interface-8-3">用车人</label>
+    <input type="text" id="interface-8-3" value="徐院长">
+    <label for="interface-8-4">用车人电话</label>
+    <input type="text" id="interface-8-4" value="17471775465">
+    <label for="interface-8-5">开始日期</label>
+    <input type="text" id="interface-8-5" value="2018-04-18 11:00:00">
+    <label for="interface-8-6">结束日期</label>
+    <input type="text" id="interface-8-6" value="2018-04-21 11:00:00">
+    <label for="interface-8-7">报到地点</label>
+    <input type="text" id="interface-8-7" value="1#0521">
+    <label for="interface-8-8">任务</label>
+    <input type="text" id="interface-8-8" value="1">
+    <label for="interface-8-9">类别</label>
+    <input type="text" id="interface-8-9" value="长途">
+    <input type="button" value="新增派车单任务" id="interface-8">
+</div>
+
+<div>
+    <label for="interface-9-1">派车单编码</label>
+    <input type="text" id="interface-9-1" value="00050000">
+    <label for="interface-9-2">派车日期</label>
+    <input type="text" id="interface-9-2" value="2018-04-18 09:13:25">
+    <label for="interface-9-3">车号</label>
+    <input type="text" id="interface-9-3" value="鄂AS55U7">
+    <label for="interface-9-4">车型</label>
+    <input type="text" id="interface-9-4" value="奥迪">
+    <label for="interface-9-5">司机工号</label>
+    <input type="text" id="interface-9-5" value="002288">
+    <label for="interface-9-6">司机姓名</label>
+    <input type="text" id="interface-9-6" value="王开贵">
+    <label for="interface-9-7">报到时间</label>
+    <input type="text" id="interface-9-7" value="2018-04-18 10:13:25">
+    <label for="interface-9-15">说明</label>
+    <input type="text" id="interface-9-15">
+    <input type="button" value="更新派车单" id="interface-9">
+</div>
+
+<div>
+    <label for="interface-10-1">派车单编码</label>
+    <input type="text" id="interface-10-1" value="00050000">
+    <label for="interface-10-2">用车单位</label>
+    <input type="text" id="interface-10-2" value="院办">
+    <label for="interface-10-3">用车人</label>
+    <input type="text" id="interface-10-3" value="徐院长">
+    <label for="interface-10-4">用车人电话</label>
+    <input type="text" id="interface-10-4" value="17471775465">
+    <label for="interface-10-5">开始日期</label>
+    <input type="text" id="interface-10-5" value="2018-04-18 11:00:00">
+    <label for="interface-10-6">结束日期</label>
+    <input type="text" id="interface-10-6" value="2018-04-21 11:00:00">
+    <label for="interface-10-7">报到地点</label>
+    <input type="text" id="interface-10-7" value="1#0521">
+    <label for="interface-10-8">任务</label>
+    <input type="text" id="interface-10-8" value="1">
+    <label for="interface-10-9">ID</label>
+    <input type="text" id="interface-10-9" value="">
+    <label for="interface-10-10">类别</label>
+    <input type="text" id="interface-10-10" value="长途">
+    <input type="button" value="更新派车单任务" id="interface-10">
+</div>
+<div>
+    <input type="text" id="interface-11-1" value="51903">
+    <input type="button" value="删除派车单下任务" id="interface-11">
+</div>
+<div>
+    <input type="text" id="interface-12-1" value="00050000">
+    <input type="button" value="删除派车单" id="interface-12">
+</div>
+
+</body>
+</html>
