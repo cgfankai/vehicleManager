@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -25,28 +24,27 @@ public class Util {
             "4.驾驶员应努力端正服务态度,提高服务意识,优质安全完成交通服务任务。\n";
 
     /**
-     *
-     * @param pcdh   派车单号
+     * @param pcdh 派车单号
      */
-    public static void sendSms(String pcdh, String BDDD, String YCR, String YCRDH, JdbcTemplate jdbcTemplate){
-        String sql = "select * from pcd where pcdh='"+ pcdh +"'";
-        List<LoadPcdByRq> result  = jdbcTemplate.query(sql, new LoadPcdByRq());
+    public static void sendSms(String pcdh, String BDDD, String YCR, String YCRDH, JdbcTemplate jdbcTemplate) {
+        String sql = "select * from pcd where pcdh='" + pcdh + "'";
+        List<LoadPcdByRq> result = jdbcTemplate.query(sql, new LoadPcdByRq());
         if (result.size() > 0) {
             LoadPcdByRq loadPcdByRq = result.get(0);
             String message = new StringBuilder(loadPcdByRq.PCRXM)
                     .append("派车：")
-                    .append(loadPcdByRq.BDSJ ).append(',')
+                    .append(loadPcdByRq.BDSJ).append(',')
                     .append(loadPcdByRq).append(',')
                     .append(BDDD).append(',')
                     .append(YCR).append(',')
                     .append(YCRDH).append(',')
                     .append(loadPcdByRq.CH).append(',')
                     .append(loadPcdByRq.CARSJXM).toString();
-            sendDispatchVehicleSms(loadPcdByRq.CARSJID,message);
+            sendDispatchVehicleSms(loadPcdByRq.CARSJID, message);
             //胡立方、李志德
-            sendDispatchVehicleSms("002967",message);
-            sendDispatchVehicleSms("001469",message);
-        }else {
+            sendDispatchVehicleSms("002967", message);
+            sendDispatchVehicleSms("001469", message);
+        } else {
             LOG.info("未查询到单号");
         }
     }
@@ -73,7 +71,7 @@ public class Util {
                         "</soap:Envelope>");
 
         HttpEntity httpEntity = new StringEntity(stringBuilder.toString(), contentType);
-        httpPost.setHeader("SOAPAction","http://tempuri.org/SendSms");
+        httpPost.setHeader("SOAPAction", "http://tempuri.org/SendSms");
         httpPost.setEntity(httpEntity);
         try {
             CloseableHttpResponse response = httpClient.execute(httpPost);

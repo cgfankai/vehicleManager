@@ -26,7 +26,7 @@ public interface RowMapperToThis<T> extends RowMapper {
         }
 
         Field[] fields = this.getClass().getFields();
-        for (Field field:fields) {
+        for (Field field : fields) {
             try {
                 field.set(t, rs.getString(field.getName()));
             } catch (IllegalAccessException e) {

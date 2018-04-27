@@ -7,11 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @CrossOrigin
@@ -199,7 +202,7 @@ public class VehicleController {
      */
     @RequestMapping("/procUpdateTask")
     public void procUpdateTask(LoadTaskByPcd loadTaskByPcd) {
-        if (loadTaskByPcd.ID == null || loadTaskByPcd.ID.equals("")){
+        if (loadTaskByPcd.ID == null || loadTaskByPcd.ID.equals("")) {
             LOG.info("ID为空，直接返回");
             return;
         }
@@ -217,7 +220,7 @@ public class VehicleController {
                 .append(loadTaskByPcd.ID).append("','")
                 .append(loadTaskByPcd.LB != null ? loadTaskByPcd.LB : "").append("'");
         String sql = stringBuilder.toString();
-        LOG.info("更新派车单SQL{}",sql);
+        LOG.info("更新派车单SQL{}", sql);
         jdbcTemplate.execute(sql);
 
         //短信通知
@@ -247,4 +250,72 @@ public class VehicleController {
         jdbcTemplate.execute(sql);
     }
 
+    /**
+     * 查询所有未完成的派车单
+     *
+     * @param args_1 是否完成
+     * @return 派车单列表
+     */
+    @RequestMapping("/procLoadPcd")
+    public List<LoadPcdByRq> procLoadPcd(@RequestParam("args_1") String args_1) {
+        String sql = "exec procLoadPcd '" + args_1 + "'";
+        return jdbcTemplate.query(sql, new LoadPcdByRq());
+    }
+
+    /**
+     * 结束派车单
+     *
+     * @param args_1 派车单编码
+     * @param args_2 完成情况
+     * @param args_3 备注
+     * @param args_4 里程
+     */
+    @RequestMapping("/procUpdatePcdWcqk")
+    public void procUpdatePcdWcqk(@RequestParam("args_1") String args_1, @RequestParam("args_2") String args_2
+            , @RequestParam("args_3") String args_3, @RequestParam("args_4") Integer args_4) {
+        String sql = new StringBuilder().append("exec procUpdatePcdWcqk '")
+                .append(args_1)
+                .append("', '")
+                .append(args_2)
+                .append("', '")
+                .append(args_3)
+                .append("', ")
+                .append(args_4).toString();
+        jdbcTemplate.execute(sql);
+    }
+
+
+    @RequestMapping("/isDistributeMember")
+    public boolean isDistributeMember(@RequestParam("args_1") String args_1) {
+        Pattern pattern = Pattern.compile("^[0-9]{6}$");
+        Matcher matcher = pattern.matcher(args_1);
+        if (matcher.find()) {
+            List<Object> result = jdbcTemplate.query("select*from ryb where RYID='" + args_1 + "'and RYLB in(1,2)", new RowMapper<Object>() {
+                @Override
+                public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    return new Object();
+                }
+            });
+            return result.size() > 0 ? true : false;
+        } else {
+            return false;
+        }
+    }
+
+    @RequestMapping("/isDriver")
+    public boolean isDriver(@RequestParam("args_1") String args_1) {
+        Pattern pattern = Pattern.compile("^[0-9]{6}$");
+        Matcher matcher = pattern.matcher(args_1);
+        if (matcher.find()) {
+            List<Object> result = jdbcTemplate.query("select*from ryb where RYID='" + args_1 + "'and RYLB = 3", new RowMapper<Object>() {
+                @Override
+                public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    return new Object();
+                }
+            });
+            return result.size() > 0 ? true : false;
+        } else {
+            return false;
+        }
+    }
 }
